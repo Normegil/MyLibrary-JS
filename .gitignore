@@ -1,2 +1,5 @@
 #TEMP Files
 *~
+
+#Vagrant
+.vagrant/
