@@ -63,7 +63,7 @@ generateGroup('users', NUMBER_OF_USERS, function(group, callback){
     }
     callback();
 });
-generateGroup('guest', function(group, callback){
+generateGroup('guest', 0, function(group, callback){
     group.access = [];
     group.access.push({
         path:'/',
