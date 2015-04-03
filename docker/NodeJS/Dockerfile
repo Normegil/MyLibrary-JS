@@ -1,9 +1,3 @@
-FROM node:0.12
-
-ADD /app/* /app
-WORKDIR /app
+FROM node:0.12-onbuild
 
 EXPOSE 8080
-
-CMD [ "npm", "install" ]
-CMD [ "npm", "start" ]

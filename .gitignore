@@ -3,3 +3,13 @@
 
 #Vagrant
 .vagrant/
+
+#NodeJS Files
+npm-debug.log
+node_modules/
+
+#Git
+*.BACKUP.*
+*.REMOTE.*
+*.LOCAL.*
+*.orig

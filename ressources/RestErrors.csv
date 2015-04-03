@@ -1,0 +1,10 @@
+#Code;HttpStatus;MoreInfoURI;Message;DevelopperMessage
+40000;400;https://github.com/Normegil/MyLibrary/wiki/40000;ID required but not found;An ID was required by your request but none was specified
+40001;400;https://github.com/Normegil/MyLibrary/wiki/40000;Invalid URI;Cannot parse URI - No REST endpoint found for URI
+40100;401;https://github.com/Normegil/MyLibrary/wiki/40100;Authentication failed;Authentication failed - Request invalid
+40101;401;https://github.com/Normegil/MyLibrary/wiki/40101;User not found;User was not found in the database (Case sensitive)
+40102;401;https://github.com/Normegil/MyLibrary/wiki/40102;Passwords doesn't match;Passwords doesn't match
+40103;401;https://github.com/Normegil/MyLibrary/wiki/40103;Invalid authentication info;Invalid Token
+40300;403;https://github.com/Normegil/MyLibrary/wiki/40300;Autorization failed;User recognized but didn't had the right to perform this action
+40400;404;https://github.com/Normegil/MyLibrary/wiki/40400;Loaded entity not found;The entity was not found in the database
+50000;500;https://github.com/Normegil/MyLibrary/wiki/50000;Internal Server error;Internal Server error - Please return the complete error to the server administrator
