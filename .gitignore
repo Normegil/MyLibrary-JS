@@ -1,3 +1,7 @@
+#Logging form applications and DB files
+logs/
+data/
+
 #TEMP Files
 *~
 
