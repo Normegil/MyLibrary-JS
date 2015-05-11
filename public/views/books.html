@@ -1,0 +1,60 @@
+<div class="row">
+	<div class="col-lg-10">
+		<!--<input type="text" class="form-control" value="Search by name and/or tag, separated by ','" />-->
+	</div>
+
+</div>
+
+<div class="row">
+	<div class="panel panel-default">
+		<div class="panel-heading clearfix">
+			<div class="pull-right box">
+				<div class="btn-group">
+					<a class="btn btn-primary">+</a>
+				</div>
+			</div>
+			<!-- VIEWTYPE -->
+			<!-- <div class="pull-right box">
+				<div class="btn-group">
+					<a class="btn btn-default" ng-model="table.viewType" btn-radio="List">List</a>
+					<a class="btn btn-default disabled" ng-model="table.viewType" btn-radio="Grid">Grid</a>
+				</div>
+			</div>-->
+			<!-- ITEMS PER PAGE -->
+			<div class="pull-right box">
+				<div class="btn-group" dropdown>
+					<button type="button" class="btn btn-default dropdown-toggle" dropdown-toggle>
+						{{table.itemsPerPage}} <span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu" role="menu">
+						<li><a href="" ng-click="table.setItemsPerPage(10)">10</a></li>
+						<li><a href="" ng-click="table.setItemsPerPage(20)">20</a></li>
+						<li><a href="" ng-click="table.setItemsPerPage(50)">50</a></li>
+						<li><a href="" ng-click="table.setItemsPerPage(100)">100</a></li>
+						<li><a href="" ng-click="table.setItemsPerPage(500)">500</a></li>
+					</ul>
+				</div>
+			</div>
+			<!-- PAGINATION -->
+			<div class="pull-right box">
+				<ml-pagination element-per-page="table.itemsPerPage" collection-size="table.totalNumberOfItems" change-page="table.setPage"/>
+			</div>
+			<h1 class="panel-title custom-panel-title">Books</h1>
+		</div>
+		<table class="table table-hover">
+			<thead>
+				<th>Name</th>
+			</thead>
+			<tbody>
+				<tr ng-repeat="item in table.items" ui-sref="booksDetail({id: item.dbID})">
+					<td>{{item.name}}</td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="panel-footer">
+			<div class="col-lg-offset-11">
+				Results: {{table.totalNumberOfItems}}
+			</div>
+		</div>
+	</div>
+</div>

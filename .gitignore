@@ -1,7 +1,5 @@
 #Logging form applications and DB files
 logs/
-data/
-.es/
 
 #TEMP Files
 *~
@@ -12,6 +10,9 @@ data/
 #NodeJS Files
 npm-debug.log
 node_modules/
+
+#Bower
+bower_components/
 
 #Git
 *.BACKUP.*

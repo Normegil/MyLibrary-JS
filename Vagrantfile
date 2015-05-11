@@ -11,7 +11,6 @@ Vagrant.configure(2) do |config|
 
 	config.vm.network "forwarded_port", guest: 8080, host: 18080
 	config.vm.network "forwarded_port", guest: 8081, host: 18081
-	config.vm.network "forwarded_port", guest: 8082, host: 18082
 	config.vm.network "forwarded_port", guest: 27017, host: 17017
 
 	config.vm.network "private_network", ip: "192.168.210.2"
@@ -26,23 +25,12 @@ Vagrant.configure(2) do |config|
 			args: "-t mylibrary/node"
 		d.build_image "/app/docker/Mongo-Express",
 			args: "-t mylibrary/mongo-express"
-		d.build_image "/app/docker/Logging/Logstash",
-			args: "-t mylibrary/logstash"
-		d.build_image "/app/docker/Logging/ElasticSearch",
-			args: "-t mylibrary/elastic-search"
-		d.build_image "/app/docker/Logging/Kibana",
-			args: "-t mylibrary/kibana"
 		d.build_image "/app/docker/Node-Server",
 			args: "-t mylibrary/node-server"
-		
+
 		d.run "data",
 			image: "mylibrary/data",
-			args: "-v /app:/app \
-					-v /app/docker/Mongo-Express/config:/etc/mongo-express \
-					-v /app/docker/Logging/Logstash/config:/etc/logstash \
-					-v /app/.es:/usr/share/elasticsearch/data \
-					-v /app/docker/Logging/ElasticSearch/config:/usr/share/elasticsearch/config
-					"
+			args: "-v /app:/app"
 		d.run "mongo",
 			image: "mylibrary/mongo",
 			args: "-p 27017:27017 --volumes-from data"
@@ -53,6 +41,6 @@ Vagrant.configure(2) do |config|
 			image: "mylibrary/node-server",
 			args: "-p 8080:8080 --link mongo:mongo --volumes-from data"
 	end
-	
+
 	config.vm.provision "shell", run: "always", inline: $start
 end

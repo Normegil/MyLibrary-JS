@@ -1,15 +1,19 @@
 var mongoose = require('mongoose');
-var User = require('./user');
+var uuid = require('node-uuid');
+var UserSchema = require('./user').Schema;
 
 var Schema = mongoose.Schema;
 var GroupSchema = new Schema({
-	id: String,
+	_id: { type: String, default: function genUUID(){
+			return uuid.v4();
+	}},
     name:String,
     access:[{
         path: String,
         method: String,
     }],
-    users:[User]
+    users: [UserSchema]
 });
 
 module.exports = mongoose.model('Group', GroupSchema);
+module.exports.Schema = GroupSchema;

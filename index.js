@@ -1,19 +1,27 @@
+var logger = require('./logger');
 var config = require('./config');
-require('mongoose').connect(config.databaseURL);
-var security = require('./controllers/security');
+var init = require('./helpers/init');
 
+var security = require('./controllers/security/securityCtrl.js');
 var express = require('express');
+var bodyParser = require('body-parser');
+
+require('mongoose').connect(config.databaseURL);
 var router = express.Router();
 require('./routes')(router);
 
-var bodyParser = require('body-parser');
+init(launchServer);
 
-var app = express();
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-app.use(security.authenticate);
-app.use('/rest', router);
-
-app.listen(config.port);
-console.log('Server listening on port ' + config.port);
-console.log('Database URI: ' + config.databaseURL);
+function launchServer(err){
+	if (err) throw err;
+	var app = express();
+	app.use(express.static(__dirname + '/public'));
+	app.use(bodyParser.urlencoded({ extended: true }));
+	app.use(bodyParser.json());
+	app.use(security.authenticateAndAuthorize);
+	app.use('/rest', router);
+	app.get('/', function(request, response){
+		response.sendFile(__dirname + '/public/index.html');
+	});
+	app.listen(config.port);
+}

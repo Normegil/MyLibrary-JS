@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>MyLibrary</title>
+		<link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css" />
+		<link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css" />
+		<link rel="stylesheet" type="text/css" href="style/mylibrary.css" />
+	</head>
+	<body ng-app="mylibrary">
+		<nav class="navbar navbar-inverse navbar-fixed-top">
+			<div class="container">
+				<div class="navbar-header">
+					<a class="navbar-brand">
+						Current_User
+					</a>
+				</div>
+				<div id="navbar" class="collapse navbar-collapse">
+					<ul class="nav navbar-nav">
+						<li ui-sref-active="active"><a ui-sref="home">News</a></li>
+						<li ui-sref-active="active"><a ui-sref="books">Books</a></li>
+					</ul>
+
+					<form class="navbar-form navbar-right" role="search">
+						<input type="text" class="form-control" placeholder="Search" />
+					</form>
+				</div>
+		  </div>
+		</nav>
+
+		<div class="container">
+			<div ui-view></div>
+		</div>
+
+		<nav class="navbar navbar-inverse navbar-fixed-bottom">
+			<div class="container">
+				<div class="navbar-text">
+					<div ncy-breadcrumb></div>
+				</div>
+			</div>
+		</nav>
+
+		<!-- LIBRARIES -->
+		<script src="bower_components/angular/angular.js"></script>
+		<script src="bower_components/ui-router/release/angular-ui-router.js"></script>
+		<script src="bower_components/angular-resource/angular-resource.min.js"></script>
+		<script src="bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+		<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+		<script src="bower_components/angular-breadcrumb/dist/angular-breadcrumb.js"></script>
+
+		<!-- APPLICATION -->
+		<script src="script/index.js"></script>
+		<!-- CUSTOM DIRECTIVES -->
+		<script src="script/directives/ngBreadcrumb/ngBreadcrumb.js"></script>
+		<script src="script/directives/onEnter/onEnter.js"></script>
+		<script src="script/directives/mlPagination/mlPagination.js"></script>
+		<!-- CUSTOM FACTORIES -->
+		<script src="script/factories/ressources/manga.js"></script>
+		<!-- CONTROLLERS -->
+		<script src="script/controllers/homeCtrl.js"></script>
+		<script src="script/controllers/booksCtrl.js"></script>
+	</body>
+</html>
