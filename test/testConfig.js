@@ -13,13 +13,9 @@ var testConfig = {
 				size: process.env.GENERATOR_USER_SIZE || 100,
 				enabled: process.env.GENERATOR_USER_ENABLED || false
 			},
-			mangas: {
-				size: process.env.GENERATOR_MANGA_NUMBER || 1000,
+			books: {
+				size: process.env.GENERATOR_MANGA_NUMBER || 1,
 				enabled: process.env.GENERATOR_MANGA_ENABLED || false
-			},
-			resource: {
-				paths: ['/mangas'],
-				methods: ['GET', 'POST',	'PUT', 'DELETE']
 			}
 		}
 	}

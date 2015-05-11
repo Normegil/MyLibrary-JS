@@ -1,7 +1,14 @@
-var manga = require('./manga');
+var bookRoutes = require('./book.js');
 
-function setupRoutes(router){
-	manga.setup(router);
+function setup(router){
+	bookRoutes.setup(router);
 }
 
-module.exports = setupRoutes;
+function getRoutesList(){
+	return [
+		bookRoutes.BASE_PATH
+	];
+}
+
+module.exports.setup = setup;
+module.exports.getRoutesList = getRoutesList;

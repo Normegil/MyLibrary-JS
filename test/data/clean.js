@@ -1,11 +1,28 @@
-var config = require('../../config');
+var async = require('async');
+var config = require('../../config.js');
+var log = require('../../logger.js');
 require('mongoose').connect(config.databaseURL);
+var book = require('./helpers/book.js');
+var user = require('./helpers/user.js');
+var group = require('./helpers/group.js');
 
-var manga = require('./helpers/manga');
-manga.clean();
-
-var user = require('./helpers/user');
-user.clean();
-
-var group = require('./helpers/group');
-group.clean();
+async.parallel(
+	{
+		book: function(callback){
+			book.clean(callback);
+		},
+		user: function(callback){
+			user.clean(callback);
+		},
+		group: function(callback){
+			group.clean(callback);
+		}
+	},
+	function onFinished(err, results){
+		if(err) log.error(err);
+		else {
+			log.info('Cleaning finished');
+			process.exit();
+		}
+	}
+);

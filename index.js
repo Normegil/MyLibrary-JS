@@ -8,9 +8,11 @@ var bodyParser = require('body-parser');
 
 require('mongoose').connect(config.databaseURL);
 var router = express.Router();
-require('./routes')(router);
+require('./routes').setup(router);
 
-init(launchServer);
+var BASE_REST_PATH = '/rest';
+
+init(BASE_REST_PATH, launchServer);
 
 function launchServer(err){
 	if (err) throw err;
@@ -19,7 +21,7 @@ function launchServer(err){
 	app.use(bodyParser.urlencoded({ extended: true }));
 	app.use(bodyParser.json());
 	app.use(security.authenticateAndAuthorize);
-	app.use('/rest', router);
+	app.use(BASE_REST_PATH, router);
 	app.get('/', function(request, response){
 		response.sendFile(__dirname + '/public/index.html');
 	});

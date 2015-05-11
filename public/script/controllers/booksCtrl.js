@@ -2,7 +2,7 @@
 
 var module = angular.module('mylibrary');
 
-module.controller('BooksController', function($scope, $log, Manga){
+module.controller('BooksController', function($scope, $log, Book){
 	$scope.table= {
 		items: [],
 		viewType: 'List',
@@ -54,7 +54,7 @@ module.controller('BooksController', function($scope, $log, Manga){
 
 	function refreshTableData(gOffset, gLimit, callback){
 		$scope.table.items = [];
-		Manga.query({
+		Book.query({
 			offset: gOffset,
 			limit: gLimit
 		}, function onSuccess(data){
@@ -69,7 +69,7 @@ module.controller('BooksController', function($scope, $log, Manga){
 	};
 
 	function loadBook(uuid, i, callback){
-		Manga.get({id:uuid}, function onSuccess(book){
+		Book.get({id:uuid}, function onSuccess(book){
 			book.dbID = getUUID(book.href);
 			$scope.table.items[i] = book;
 		}, function onError(err){
