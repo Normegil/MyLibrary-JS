@@ -7,7 +7,7 @@ var errorCtrl = {
 		log.info(code + ' - ' + error);
 		response.status(code);
 
-		CSV.parse('./ressources/RestErrors.csv', function(err, errorTable){
+		CSV.parse('./resources/RestErrors.csv', function(err, errorTable){
 			if(err) {
 				log.error('Error while parsing error file');
 				response.status(500);

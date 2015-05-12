@@ -41,13 +41,23 @@
 			</div>
 			<h1 class="panel-title custom-panel-title">Books</h1>
 		</div>
-		<table class="table table-hover">
+		<table class="table table-hover table-responsive">
 			<thead>
-				<th>Name</th>
+				<th class="col-md-3">Title</th>
+				<th class="col-md-4">Authors</th>
+				<th class="col-md-3">Genre</th>
+				<th class="col-md-2">Release date</th>
 			</thead>
 			<tbody>
-				<tr ng-repeat="item in table.items" ui-sref="booksDetail({id: item.dbID})">
-					<td>{{item.name}}</td>
+				<tr ng-repeat="item in table.items track by $index" ui-sref="booksDetail({id: item.dbID})">
+					<td>{{item.title}}</td>
+					<td>
+						<span ng-repeat="author in item.authors track by $index">{{author}}{{$last ? '' : ', '}}</span>
+					</td>
+					<td>
+						<span ng-repeat="genre in item.genres  track by $index">{{genre}}{{$last ? '' : ', '}}</span>
+					</td>
+					<td>{{item.releaseDate | date: 'yyyy-MM-dd'}}</td>
 				</tr>
 			</tbody>
 		</table>

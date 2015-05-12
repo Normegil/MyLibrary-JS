@@ -7,7 +7,24 @@ var BookSchema = new Schema({
 	_id: { type: String, default: function genUUID(){
 			return uuid.v4();
 	}},
-	name: String
+
+	isbn: String,
+
+	title: String,
+	alternativeTitles: [String],
+
+	authors: [String],
+
+	genres: [String],
+
+	tags: [String],
+
+	urls: [{
+		type: String,
+		url: String
+	}],
+
+	releaseDate: Date
 });
 
 module.exports = mongoose.model('Book', BookSchema);

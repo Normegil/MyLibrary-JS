@@ -17,7 +17,11 @@ function generate(name, numberOfUsers, generateAccess){
 				function saveGroup(group, asyncCallback){
 					group.save(asyncCallback);
 				},
-				onGroupGenerated
+				function onGenerated(err){
+					if(err) return onGroupGenerated(err);
+					log.info('Group generated ('+name+')')
+					onGroupGenerated(null, true)
+				}
 			)
 		});
 	});

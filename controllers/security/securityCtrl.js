@@ -60,7 +60,7 @@ function getUserFromHeaders(authorizationHeader, tokenHeader, callback){
 function loadUser(givenPseudo, callback){
 	User.findOne({pseudo: givenPseudo}, function onLoad(err, user){
 		if(err) return callback(err);
-		else if(user === null) return callback(new  Error('User ' + pseudo + ' not found'));
+		else if(user === null) return callback(new  Error('User ' + givenPseudo + ' not found'));
 		else return callback(null, user);
 	});
 }
