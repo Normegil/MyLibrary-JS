@@ -65,13 +65,13 @@ function generateBook(index, callback){
 	}
 
 	book.authors = [];
-	var numberOfAuthors = getRandomInteger(2) + 1;
+	var numberOfAuthors = getRandomInteger(3) + 1;
 	for(var i=0;i < numberOfAuthors;i++){
 		book.authors.push(getAuthor());
 	}
 
 	book.genres = [];
-	var numberOfGenres = getRandomInteger(1) + 1;
+	var numberOfGenres = getRandomInteger(2) + 1;
 	for(var i=0;i < numberOfGenres;i++){
 		book.genres.push(getGenre());
 	}
