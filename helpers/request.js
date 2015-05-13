@@ -1,4 +1,5 @@
 var validator = require('validator');
+var helper = require('./helper.js');
 var config = require('../config.js');
 
 function geFullUrlWithOriginalUrl(request, originalUrl){
@@ -23,22 +24,21 @@ function getRequestedResourcePath(request){
 
 function getOffset(request){
 	var limit = request.query.offset || 0;
-	return getAsInteger(limit);
+	return helper.getAsInteger(limit);
 }
 
 function getLimit(request){
 	var limit = request.query.limit || config.rest.collections.defaultLimit;
-	limit = getAsInteger(limit);
+	limit = helper.getAsInteger(limit);
 	if(limit > config.rest.collections.maxLimit){
 		limit = config.rest.collections.maxLimit;
 	}
 	return limit;
 }
 
-function getAsInteger(actualValue){
-	if(typeof actualValue === 'string' || actualValue instanceof String){
-		return parseInt(actualValue);
-	} else return actualValue;
+function getLinksOnly(request){
+	var linksOnly = request.query.linksOnly || false;
+	return helper.getAsBoolean(linksOnly);
 }
 
 module.exports.geFullUrl = geFullUrl;
@@ -46,3 +46,4 @@ module.exports.geFullUrlSkippingParameters = geFullUrlSkippingParameters;
 module.exports.getRequestedResourcePath = getRequestedResourcePath;
 module.exports.getOffset = getOffset;
 module.exports.getLimit = getLimit;
+module.exports.getLinksOnly = getLinksOnly;

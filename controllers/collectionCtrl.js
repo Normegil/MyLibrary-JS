@@ -1,11 +1,11 @@
 var log = require('../logger.js');
 var httpStatus = require('../httpStatus.js');
 
-function handle(response, baseUrl, givenOffset, givenLimit, totalNumberofItemsInDB, records){
+function handle(response, baseUrl, givenOffset, givenLimit, totalNumberofItemsInDB, records, linksOnly){
 	response
 		.status(httpStatus.ok)
 		.json({
-			items: getItems(baseUrl, records),
+			items: getItems(baseUrl, records, linksOnly),
 
 			offset: givenOffset,
 			limit: givenLimit,
@@ -50,11 +50,18 @@ function getLastOffset(limit, totalNumberOfItems){
 	return offset;
 }
 
-function getItems(baseUrl, records){
+function getItems(baseUrl, records, linksOnly){
 	var items = [];
 	for(var i=0 ; i<records.length ; i++){
-		var item = {href: baseUrl + '/' + records[i]._id};
-		items.push(item)
+		var item;
+		if(linksOnly){
+			item = {href: baseUrl + '/' + records[i]._id};
+		} else {
+			item = records[i].toObject();
+			item.href = baseUrl + '/' + records[i]._id;
+			delete item._id;
+		}
+		items.push(item);
 	}
 	return items;
 }

@@ -18,6 +18,26 @@ function getRandomBoolean(){
 		: false;
 }
 
+function getAsInteger(actualValue){
+	if(typeof actualValue === 'string' || actualValue instanceof String){
+		return parseInt(actualValue);
+	} else return actualValue;
+}
+
+function getAsBoolean(actualValue){
+	if(typeof actualValue === 'string' || actualValue instanceof String){
+		if(actualValue === 'true'){
+			return true;
+		}else if(actualValue === 'false'){
+			return false;
+		}else{
+			throw new Error(actualValue + 'is not a boolean');
+		}
+	} else return actualValue;
+}
+
 module.exports.getArrayOfIndex = getArrayOfIndex;
 module.exports.getRandomInteger = getRandomInteger;
 module.exports.getRandomBoolean = getRandomBoolean;
+module.exports.getAsInteger = getAsInteger;
+module.exports.getAsBoolean = getAsBoolean;

@@ -38,7 +38,7 @@ module.controller('BooksController', function($scope, $log, Alerts, BookSerie){
 					function onResponse(err, data){
 						if(err) {
 							$log.error(err);
-							$scope.alerts.addAlert('danger', err.data);
+							$scope.alerts.add('danger', err.data);
 						}
 						else $log.info('BooksController - Table refreshed');
 					}
@@ -53,7 +53,7 @@ module.controller('BooksController', function($scope, $log, Alerts, BookSerie){
 		function onResponse(err, data){
 			if(err) {
 				$log.error(err);
-				$scope.alerts.addAlert('danger', err.data);
+				$scope.alerts.add('danger', err.data);
 			}
 			else $log.info('BooksController - Table refreshed');
 		}
@@ -61,14 +61,25 @@ module.controller('BooksController', function($scope, $log, Alerts, BookSerie){
 
 	function refreshTableData(gOffset, gLimit, callback){
 		$scope.table.items = [];
+		var pLinksOnly = gLimit > 50 ?
+			true
+			: false;
 		BookSerie.query({
 			offset: gOffset,
-			limit: gLimit
+			limit: gLimit,
+			linksOnly: pLinksOnly
 		}, function onSuccess(data){
 			$scope.table.totalNumberOfItems = data.totalNumberOfItems;
 			for(var i=0 ; i<data.items.length ; i++){
 				var item = data.items[i];
-				loadBook(getUUID(item.href), i);
+				if(pLinksOnly){
+					loadBook(getUUID(item.href), i)
+				}else{
+					item.dbID = getUUID(item.href);
+					item.authors = getAuthors(item);
+					item.genres = getGenres(item);
+					$scope.table.items.push(item);
+				}
 			}
 		}, function onError(err){
 			return callback(err);
@@ -77,7 +88,7 @@ module.controller('BooksController', function($scope, $log, Alerts, BookSerie){
 
 	function loadBook(uuid, i, callback){
 		BookSerie.get({id:uuid}, function onSuccess(bookSerie){
-			bookSerie.dbID = getUUID(bookSerie.href);
+			bookSerie.dbID = uuid;
 
 			bookSerie.authors = getAuthors(bookSerie);
 			bookSerie.genres = getGenres(bookSerie);
@@ -96,7 +107,10 @@ module.controller('BooksController', function($scope, $log, Alerts, BookSerie){
 				$scope.table.currentPage * $scope.table.itemsPerPage,
 				$scope.table.itemsPerPage,
 				function onResponse(err, data){
-					if(err) console.log(err);
+					if(err) {
+						$log.error(err);
+						$scope.alerts.add('danger', err.data);
+					}
 					else console.log('BooksController - Table refreshed');
 				}
 			);

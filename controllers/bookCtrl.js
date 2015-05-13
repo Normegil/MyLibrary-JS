@@ -13,27 +13,43 @@ var requestHelper = require('../helpers/request.js');
 function getAll(request, response){
 	var offset = requestHelper.getOffset(request, 0);
 	var limit = requestHelper.getLimit(request, config.rest.collections.defaultLimit);
+	try{
+		var linksOnly = requestHelper.getLinksOnly(request);
+		log.debug({LinksOnly: linksOnly}, typeof linksOnly);
+		if(limit > config.rest.collections.maxLimit){
+			limit = config.rest.collections.maxLimit;
+		}
 
-	if(limit > config.rest.collections.maxLimit){
-		limit = config.rest.collections.maxLimit;
-	}
-
-	BookSerie.find()
-		.sort({
-			name: 'asc'
-		})
-		.skip(offset)
-		.limit(limit)
-		.select('_id')
-		.exec(function(err, books){
-			if(err) errorCtrl.handle(response, 50000, err);
-			else {
-				BookSerie.count(function(err, count){
-					if(err) errorCtrl.handle(response, 50000, err);
-					else collectionController.handle(response, requestHelper.geFullUrlSkippingParameters(request), offset, limit, count, books);
-				});
+		var query = BookSerie.find()
+			.sort({
+				name: 'asc'
+			})
+			.skip(offset)
+			.limit(limit);
+			if(linksOnly){
+				query = query.select('_id');
 			}
-		});
+
+			query.exec(function(err, books){
+				if(err) errorCtrl.handle(response, 50000, err);
+				else {
+					BookSerie.count(function(err, count){
+						if(err) errorCtrl.handle(response, 50000, err);
+						else collectionController.handle(
+							response,
+							requestHelper.geFullUrlSkippingParameters(request),
+							offset,
+							limit,
+							count,
+							books,
+							linksOnly
+						);
+					});
+				}
+			});
+		} catch(e){
+			errorCtrl.handle(response, 40001, e);
+		}
 };
 
 function get(request, response){
