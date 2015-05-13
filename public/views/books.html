@@ -2,7 +2,6 @@
 	<div class="col-lg-10">
 		<!--<input type="text" class="form-control" value="Search by name and/or tag, separated by ','" />-->
 	</div>
-
 </div>
 
 <div class="row">
@@ -10,7 +9,7 @@
 		<div class="panel-heading clearfix">
 			<div class="pull-right box">
 				<div class="btn-group">
-					<a class="btn btn-primary">+</a>
+					<a class="btn btn-primary"><strong>+</strong></a>
 				</div>
 			</div>
 			<!-- VIEWTYPE -->
@@ -52,9 +51,10 @@
 			<tbody>
 				<tr ng-repeat="item in table.items track by $index" ui-sref="booksDetail({id: item.dbID})">
 					<td>
-						<span class="glyphicon glyphicon-download"></span>
-						<span class="glyphicon glyphicon-pencil"></span>
-						<span class="glyphicon glyphicon-trash"></span>
+						<a class="clickable" ng-click="removeBook($event, item.dbID)"><span class="glyphicon glyphicon-play"></span></a>
+						<a class="clickable" ng-click="removeBook($event, item.dbID)"><span class="glyphicon glyphicon-download"></span></a>
+						<a class="clickable" ng-click="removeBook($event, item.dbID)"><span class="glyphicon glyphicon-pencil"></span></a>
+						<a class="clickable" ng-click="removeBook($event, item.dbID)"><span class="glyphicon glyphicon-trash"></span></a>
 					</td>
 					<td>{{item.title}}</td>
 					<td>{{item.books.length}}</td>

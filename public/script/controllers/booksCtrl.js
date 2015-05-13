@@ -2,7 +2,8 @@
 
 var module = angular.module('mylibrary');
 
-module.controller('BooksController', function($scope, $log, BookSerie){
+module.controller('BooksController', function($scope, $log, Alerts, BookSerie){
+	$scope.alerts = Alerts;
 	$scope.table= {
 		items: [],
 		viewType: 'List',
@@ -35,8 +36,11 @@ module.controller('BooksController', function($scope, $log, BookSerie){
 					$scope.table.currentPage * $scope.table.itemsPerPage,
 					$scope.table.itemsPerPage,
 					function onResponse(err, data){
-						if(err) console.log(err);
-						else console.log('BooksController - Table refreshed');
+						if(err) {
+							$log.error(err);
+							$scope.alerts.addAlert('danger', err.data);
+						}
+						else $log.info('BooksController - Table refreshed');
 					}
 				);
 			}
@@ -47,7 +51,10 @@ module.controller('BooksController', function($scope, $log, BookSerie){
 		$scope.table.currentPage * $scope.table.itemsPerPage,
 		$scope.table.itemsPerPage,
 		function onResponse(err, data){
-			if(err) $log.error(err);
+			if(err) {
+				$log.error(err);
+				$scope.alerts.addAlert('danger', err.data);
+			}
 			else $log.info('BooksController - Table refreshed');
 		}
 	);
@@ -77,7 +84,25 @@ module.controller('BooksController', function($scope, $log, BookSerie){
 
 			$scope.table.items[i] = bookSerie;
 		}, function onError(err){
+			$scope.alerts.add('danger', err.data);
 			$log.error(err)
+		});
+	};
+
+	$scope.removeBook = function removeBook(e, gID){
+		e.stopPropagation();
+		BookSerie.delete({id:gID}, function onSuccess(book){
+			refreshTableData(
+				$scope.table.currentPage * $scope.table.itemsPerPage,
+				$scope.table.itemsPerPage,
+				function onResponse(err, data){
+					if(err) console.log(err);
+					else console.log('BooksController - Table refreshed');
+				}
+			);
+		}, function onError(err){
+			$log.error(err);
+			$scope.alerts.add('danger', err.data);
 		});
 	};
 
@@ -126,11 +151,5 @@ module.controller('BooksController', function($scope, $log, BookSerie){
 			}
 		}
 		return genres;
-	}
-
-	$scope.noRef = function(e, txt){
-		e.preventDefault();
-		alert(txt);
-		e.stopPropagation();
 	}
 });

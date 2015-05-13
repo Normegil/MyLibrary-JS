@@ -3,6 +3,11 @@ body{
 	padding-bottom: 65px;
 }
 
+.clickable{
+	cursor: pointer;
+	color: black;
+}
+
 .custom-panel-title{
 	font-weight: bold;
 	padding-top: 7.5px;

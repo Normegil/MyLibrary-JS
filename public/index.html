@@ -10,7 +10,26 @@
 		<link rel="stylesheet" type="text/css" href="style/mylibrary.css" />
 	</head>
 	<body ng-app="mylibrary">
-		<nav class="navbar navbar-inverse navbar-fixed-top">
+
+		<script type="text/ng-template" id="alertModal.html">
+			<div class="modal-header">
+				<h3>Alerts & Errors</h3>
+			</div>
+			<div class="modal-body">
+				<alert ng-repeat="alert in alerts.list" type="{{alert.type}}" close="alerts.remove($index)">
+					<p class="pull-right">{{alert.time | date : 'yyyy-MM-dd HH:mm'}}</p>
+					<h3><abbr title="{{alert.code}} - {{alert.developerMessage}}">{{alert.httpStatus}}</abbr></h3>
+					<p>{{alert.message}}</p>
+					<p><small>More Info: <a class="alert-link" target="_blank" href="{{alert.moreInfoUri}}">{{alert.moreInfoUri}}</a></small></p>
+				</alert>
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-primary" ng-click="ok()">OK</button>
+				<button class="btn btn-default" ng-click="reset()">Reset</button>
+			</div>
+		</script>
+
+		<nav ng-controller="MenuController" class="navbar navbar-inverse navbar-fixed-top">
 			<div class="container">
 				<div class="navbar-header">
 					<a class="navbar-brand">
@@ -22,10 +41,12 @@
 						<li ui-sref-active="active"><a ui-sref="home">News</a></li>
 						<li ui-sref-active="active"><a ui-sref="books">Books</a></li>
 					</ul>
-
 					<form class="navbar-form navbar-right" role="search">
 						<input type="text" class="form-control" placeholder="Search" />
 					</form>
+					<div class="navbar-form navbar-right">
+						<button ng-if="alerts.list.length > 0" class="btn btn-danger" ng-click="openAlert()">{{alerts.list.length}}</button>
+					</div>
 				</div>
 		  </div>
 		</nav>
@@ -58,7 +79,11 @@
 		<script src="script/directives/mlPagination/mlPagination.js"></script>
 		<!-- CUSTOM FACTORIES -->
 		<script src="script/factories/ressources/book.js"></script>
+		<!-- CUSTOM FACTORIES -->
+		<script src="script/services/alerts.js"></script>
 		<!-- CONTROLLERS -->
+		<script src="script/controllers/alertModalCtrl.js"></script>
+		<script src="script/controllers/menuCtrl.js"></script>
 		<script src="script/controllers/homeCtrl.js"></script>
 		<script src="script/controllers/booksCtrl.js"></script>
 	</body>
