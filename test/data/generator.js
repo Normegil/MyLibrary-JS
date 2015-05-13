@@ -4,12 +4,12 @@ var config = require('../../config.js');
 var routes = require('../../routes');
 var testConfig = require('../testConfig.js');
 var group = require('./helpers/group.js');
-var book = require('./helpers/book.js');
+var bookSerie = require('./helpers/books/bookSerie.js');
 require('mongoose').connect(config.databaseURL);
 
 function generateBooks(callback){
 	if(testConfig.data.generation.books.enabled){
-		book.generate(testConfig.data.generation.books.size, callback);
+		bookSerie.generate(testConfig.data.generation.books.size, callback);
 	}else{
 		callback(null, false);
 	}

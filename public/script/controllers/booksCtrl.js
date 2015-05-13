@@ -2,7 +2,7 @@
 
 var module = angular.module('mylibrary');
 
-module.controller('BooksController', function($scope, $log, Book){
+module.controller('BooksController', function($scope, $log, BookSerie){
 	$scope.table= {
 		items: [],
 		viewType: 'List',
@@ -54,7 +54,7 @@ module.controller('BooksController', function($scope, $log, Book){
 
 	function refreshTableData(gOffset, gLimit, callback){
 		$scope.table.items = [];
-		Book.query({
+		BookSerie.query({
 			offset: gOffset,
 			limit: gLimit
 		}, function onSuccess(data){
@@ -69,9 +69,13 @@ module.controller('BooksController', function($scope, $log, Book){
 	};
 
 	function loadBook(uuid, i, callback){
-		Book.get({id:uuid}, function onSuccess(book){
-			book.dbID = getUUID(book.href);
-			$scope.table.items[i] = book;
+		BookSerie.get({id:uuid}, function onSuccess(bookSerie){
+			bookSerie.dbID = getUUID(bookSerie.href);
+
+			bookSerie.authors = getAuthors(bookSerie);
+			bookSerie.genres = getGenres(bookSerie);
+
+			$scope.table.items[i] = bookSerie;
 		}, function onError(err){
 			$log.error(err)
 		});
@@ -81,6 +85,48 @@ module.controller('BooksController', function($scope, $log, Book){
 		var splittedUrl = url.split('/');
 		return splittedUrl[splittedUrl.length -1];
 	};
+
+	function getAuthors(bookSerie){
+		var authors = [];
+		for(var i=0 ; i<bookSerie.books.length ; i++){
+			var book = bookSerie.books[i];
+			for(var j=0; j<book.authors.length ; j++){
+
+				var exist = false;
+				for(var x=0; x<authors.length ;x++){
+					if(authors[x] === book.authors[j]){
+						exist = true;
+						break;
+					}
+				}
+
+				if(!exist){
+					authors.push(book.authors[j]);
+				}
+			}
+		}
+		return authors;
+	}
+
+	function getGenres(bookSerie){
+		var genres = [];
+		for(var i=0 ; i<bookSerie.books.length ; i++){
+			var book = bookSerie.books[i];
+			for(var j=0; j<book.genres.length ; j++){
+				var exist = false;
+				for(var x=0; x<genres.length ;x++){
+					if(genres[x] === book.genres[j]){
+						exist = true;
+						break;
+					}
+				}
+				if(!exist){
+					genres.push(book.genres[j]);
+				}
+			}
+		}
+		return genres;
+	}
 
 	$scope.noRef = function(e, txt){
 		e.preventDefault();

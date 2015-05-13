@@ -6,7 +6,7 @@ var errorCtrl = require('./errorCtrl');
 var collectionController = require('./collectionCtrl.js');
 
 var httpStatus = require('../httpStatus.js');
-var Book = require('../models/book.js');
+var BookSerie = require('../models/bookSerie.js');
 var requestHelper = require('../helpers/request.js');
 
 
@@ -18,7 +18,7 @@ function getAll(request, response){
 		limit = config.rest.collections.maxLimit;
 	}
 
-	Book.find()
+	BookSerie.find()
 		.sort({
 			name: 'asc'
 		})
@@ -28,7 +28,7 @@ function getAll(request, response){
 		.exec(function(err, books){
 			if(err) errorCtrl.handle(response, 50000, err);
 			else {
-				Book.count(function(err, count){
+				BookSerie.count(function(err, count){
 					if(err) errorCtrl.handle(response, 50000, err);
 					else collectionController.handle(response, requestHelper.geFullUrlSkippingParameters(request), offset, limit, count, books);
 				});
@@ -37,7 +37,7 @@ function getAll(request, response){
 };
 
 function get(request, response){
-	Book.findById(request.params.uuid, function(err, book){
+	BookSerie.findById(request.params.uuid, function(err, book){
 		if(err)	{
 			errorCtrl.handle(response, 40400, err)
 		}	else{
@@ -53,7 +53,7 @@ function get(request, response){
 };
 
 function create(request, response){
-	var book = new Book();
+	var book = new BookSerie();
 	book.uuid = uuid.v4();
 	book.name = request.body.name;
 	book.save(function(error){
@@ -66,7 +66,7 @@ function create(request, response){
 };
 
 function update(request, response){
-	Book.findById(request.params.uuid, function(error, book){
+	BookSerie.findById(request.params.uuid, function(error, book){
 		if(error)	return errorCtrl.handle(response, 40400, error);
 		if(request.body.name){
 			book.name = request.boy.name;
@@ -82,7 +82,7 @@ function update(request, response){
 };
 
 function remove(request, response){
-	Book.remove({
+	BookSerie.remove({
 		uuid: request.params.uuid
 	}, function(error, book){
 		if(error) return errorCtrl.handle(response, 50000, error);

@@ -45,9 +45,9 @@
 			<thead>
 				<th class="col-md-1">Actions</th>
 				<th class="col-md-3">Title</th>
+				<th class="col-md-1"># Books</th>
 				<th class="col-md-4">Authors</th>
 				<th class="col-md-2	">Genre</th>
-				<th class="col-md-2">Release date</th>
 			</thead>
 			<tbody>
 				<tr ng-repeat="item in table.items track by $index" ui-sref="booksDetail({id: item.dbID})">
@@ -57,13 +57,13 @@
 						<span class="glyphicon glyphicon-trash"></span>
 					</td>
 					<td>{{item.title}}</td>
+					<td>{{item.books.length}}</td>
 					<td>
 						<span ng-repeat="author in item.authors track by $index">{{author}}{{$last ? '' : ', '}}</span>
 					</td>
 					<td>
-						<span ng-repeat="genre in item.genres  track by $index" class="label label-default">{{genre}}</span>
+						<span ng-repeat="genre in item.genres  track by $index"><span class="label label-default">{{genre}}</span>{{$last ? '' : ' '}}</span>
 					</td>
-					<td>{{item.releaseDate | date: 'yyyy-MM-dd'}}</td>
 				</tr>
 			</tbody>
 		</table>

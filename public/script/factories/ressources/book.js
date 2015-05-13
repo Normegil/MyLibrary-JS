@@ -1,6 +1,6 @@
 angular
 	.module('mylibrary')
-	.factory('Book', function($resource) {
+	.factory('BookSerie', function($resource) {
 		return $resource('/rest/books/:id', {
 			id: '@id'
 		}, {

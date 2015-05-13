@@ -2,7 +2,7 @@ var async = require('async');
 var config = require('../../config.js');
 var log = require('../../logger.js');
 require('mongoose').connect(config.databaseURL);
-var book = require('./helpers/book.js');
+var book = require('./helpers/books/bookSerie.js');
 var user = require('./helpers/user.js');
 var group = require('./helpers/group.js');
 
