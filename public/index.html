@@ -21,6 +21,10 @@
 					<h3><abbr title="{{alert.code}} - {{alert.developerMessage}}">{{alert.httpStatus}}</abbr></h3>
 					<p>{{alert.message}}</p>
 					<p><small>More Info: <a class="alert-link" target="_blank" href="{{alert.moreInfoUri}}">{{alert.moreInfoUri}}</a></small></p>
+					<p><small><button class="clickable" ng-click="toggleCollapseStatus($index)">Request</button></small></p>
+					<div collapse="alert.collapsed">
+						<div class="well well-lg">{{alert.request.method}} - {{alert.request.url}}</div>
+					</div>
 				</alert>
 			</div>
 			<div class="modal-footer">

@@ -16,7 +16,7 @@ function authenticateAndAuthorize(request, response, next){
 	log.trace('TokenHeader: ' + tokenHeader);
 
 	getUserFromHeaders(authorizationHeader, tokenHeader, function onLoad(err, user){
-		if (err) errorCtrl.handle(response, 50000, err);
+		if (err) errorCtrl.handle(response, 50000, err, request);
 		else {
 			async.parallel(
 				{
@@ -28,9 +28,9 @@ function authenticateAndAuthorize(request, response, next){
 					}
 				},
 				function onVerified(err, results){
-					if (err) errorCtrl.handle(response, 50000, err);
-					else if (!results.authentication) errorCtrl.handle(response, 40100, new Error('User ' + user.pseudo + ' fail to authenticate'));
-					else if (!results.authorization) errorCtrl.handle(response, 40300, new Error('User ' + user.pseudo + ' not authorized to access resource ' + request.originalUrl + ' with method ' + request.method));
+					if (err) errorCtrl.handle(response, 50000, err, request);
+					else if (!results.authentication) errorCtrl.handle(response, 40100, new Error('User ' + user.pseudo + ' fail to authenticate'), request);
+					else if (!results.authorization) errorCtrl.handle(response, 40300, new Error('User ' + user.pseudo + ' not authorized to access resource ' + request.originalUrl + ' with method ' + request.method), request);
 					else next(); // Correct Authentication + Authorization
 				}
 			);
