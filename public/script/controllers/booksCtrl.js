@@ -124,7 +124,6 @@ module.controller('BooksController', function($scope, $log, Alerts, BookSerie){
 		var splittedUrl = url.split('/');
 		return splittedUrl[splittedUrl.length -1];
 	};
-
 	function getAuthors(bookSerie){
 		var authors = [];
 		for(var i=0 ; i<bookSerie.books.length ; i++){
@@ -165,5 +164,5 @@ module.controller('BooksController', function($scope, $log, Alerts, BookSerie){
 			}
 		}
 		return genres;
-	}
+	};
 });

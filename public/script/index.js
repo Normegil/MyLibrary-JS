@@ -33,10 +33,11 @@ mylibrary
 			})
 			.state('booksDetail', {
 				url: '/books/:id',
-				templateUrl: baseViewDirectory + 'books.html',
-				controller: 'BooksController',
+				templateUrl: baseViewDirectory + 'bookDetail.html',
+				controller: 'BookDetailController',
 				ncyBreadcrumb: {
-					label: 'Books'
+					parent: 'books',
+					label: '{{bookSerie.title}}'
 				}
 			})
 			.state('notFound', {
