@@ -4,95 +4,58 @@ var module = angular.module('mylibrary');
 
 module.controller('BooksController', function($scope, $log, Alerts, BookSerie){
 	$scope.alerts = Alerts;
-	$scope.table= {
+	$scope.table = {
+		title: 'Books',
 		items: [],
 		viewType: 'List',
-		itemsPerPage: 10,
 		currentPage: 0,
+		defaultSize: 10,
+		availableSizes:[
+			10,
+			20,
+			50,
+			100,
+			500
+		],
 		totalNumberOfItems: 0,
 
-		getTotalNumberOfPages: function() {
-			var totalPages = Math.floor($scope.table.totalNumberOfItems / $scope.table.itemsPerPage);
-			if($scope.table.totalNumberOfItems % $scope.table.itemsPerPage !=0){
-				totalPages +=1;
-			}
-			return totalPages;
-		},
-
-		setItemsPerPage: function(numberOfItems){
-			if(numberOfItems < 10){
-				this.itemsPerPage = 10;
-			}else{
-				this.itemsPerPage = numberOfItems;
-			}
-		},
-
-		setPage: function(page) {
-			$log.debug('BooksController - Attempt to change currentPage to ' + page);
-			var realPage = page - 1;
-			if(realPage >= 0 && realPage < $scope.table.getTotalNumberOfPages()){
-				$scope.table.currentPage = realPage;
-				refreshTableData(
-					$scope.table.currentPage * $scope.table.itemsPerPage,
-					$scope.table.itemsPerPage,
-					function onResponse(err, data){
-						if(err) {
-							$log.error(err);
-							$scope.alerts.add('danger', err.data);
-						}
-						else $log.info('BooksController - Table refreshed');
+		refresh: function refresh(gPage, gLimit){
+			var gOffset = gPage * gLimit;
+			var pLinksOnly = gLimit > 50 ?
+				true
+				: false;
+			$scope.table.items = [];
+			BookSerie.query({
+				offset: gOffset,
+				limit: gLimit,
+				linksOnly: pLinksOnly
+			}, function onSuccess(data){
+				$scope.table.totalNumberOfItems = data.totalNumberOfItems;
+				for(var i=0 ; i<data.items.length ; i++){
+					var item = data.items[i];
+					if(pLinksOnly){
+						loadBook(getUUID(item.href), i)
+					}else{
+						item.dbID = getUUID(item.href);
+						item.authors = getAuthors(item);
+						item.genres = getGenres(item);
+						$scope.table.items.push(item);
 					}
-				);
-			}
-		}
-	}
-
-	refreshTableData(
-		$scope.table.currentPage * $scope.table.itemsPerPage,
-		$scope.table.itemsPerPage,
-		function onResponse(err, data){
-			if(err) {
+				}
+				$log.info('BooksController - Table refreshed')
+			}, function onError(err){
 				$log.error(err);
 				$scope.alerts.add('danger', err.data);
-			}
-			else $log.info('BooksController - Table refreshed');
+			});
 		}
-	);
-
-	function refreshTableData(gOffset, gLimit, callback){
-		$scope.table.items = [];
-		var pLinksOnly = gLimit > 50 ?
-			true
-			: false;
-		BookSerie.query({
-			offset: gOffset,
-			limit: gLimit,
-			linksOnly: pLinksOnly
-		}, function onSuccess(data){
-			$scope.table.totalNumberOfItems = data.totalNumberOfItems;
-			for(var i=0 ; i<data.items.length ; i++){
-				var item = data.items[i];
-				if(pLinksOnly){
-					loadBook(getUUID(item.href), i)
-				}else{
-					item.dbID = getUUID(item.href);
-					item.authors = getAuthors(item);
-					item.genres = getGenres(item);
-					$scope.table.items.push(item);
-				}
-			}
-		}, function onError(err){
-			return callback(err);
-		});
 	};
+	$scope.table.refresh($scope.table.currentPage, $scope.table.itemsPerPage);
 
-	function loadBook(uuid, i, callback){
+	function loadBook(uuid, i){
 		BookSerie.get({id:uuid}, function onSuccess(bookSerie){
 			bookSerie.dbID = uuid;
-
 			bookSerie.authors = getAuthors(bookSerie);
 			bookSerie.genres = getGenres(bookSerie);
-
 			$scope.table.items[i] = bookSerie;
 		}, function onError(err){
 			$scope.alerts.add('danger', err.data);
@@ -103,17 +66,7 @@ module.controller('BooksController', function($scope, $log, Alerts, BookSerie){
 	$scope.removeBook = function removeBook(e, gID){
 		e.stopPropagation();
 		BookSerie.delete({id:gID}, function onSuccess(book){
-			refreshTableData(
-				$scope.table.currentPage * $scope.table.itemsPerPage,
-				$scope.table.itemsPerPage,
-				function onResponse(err, data){
-					if(err) {
-						$log.error(err);
-						$scope.alerts.add('danger', err.data);
-					}
-					else console.log('BooksController - Table refreshed');
-				}
-			);
+			$scope.table.refresh($scope.table.currentPage, $scope.table.itemsPerPage);
 		}, function onError(err){
 			$log.error(err);
 			$scope.alerts.add('danger', err.data);
@@ -124,6 +77,7 @@ module.controller('BooksController', function($scope, $log, Alerts, BookSerie){
 		var splittedUrl = url.split('/');
 		return splittedUrl[splittedUrl.length -1];
 	};
+
 	function getAuthors(bookSerie){
 		var authors = [];
 		for(var i=0 ; i<bookSerie.books.length ; i++){

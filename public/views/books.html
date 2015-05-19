@@ -8,72 +8,40 @@
 
 	<alert ng-repeat="alert in alerts.list" type="{{alert.type}}" close="alerts.remove($index)">{{alert.msg}}</alert>
 
-	<div class="panel panel-default">
-		<div class="panel-heading clearfix">
-			<div class="pull-right box">
-				<div class="btn-group">
-					<a class="btn btn-primary"><strong>+</strong></a>
-				</div>
-			</div>
-			<!-- VIEWTYPE -->
-			<!-- <div class="pull-right box">
-				<div class="btn-group">
-					<a class="btn btn-default" ng-model="table.viewType" btn-radio="List">List</a>
-					<a class="btn btn-default disabled" ng-model="table.viewType" btn-radio="Grid">Grid</a>
-				</div>
-			</div>-->
-			<!-- ITEMS PER PAGE -->
-			<div class="pull-right box">
-				<div class="btn-group" dropdown>
-					<button type="button" class="btn btn-default dropdown-toggle" dropdown-toggle>
-						{{table.itemsPerPage}} <span class="caret"></span>
-					</button>
-					<ul class="dropdown-menu" role="menu">
-						<li><a href="" ng-click="table.setItemsPerPage(10)">10</a></li>
-						<li><a href="" ng-click="table.setItemsPerPage(20)">20</a></li>
-						<li><a href="" ng-click="table.setItemsPerPage(50)">50</a></li>
-						<li><a href="" ng-click="table.setItemsPerPage(100)">100</a></li>
-						<li><a href="" ng-click="table.setItemsPerPage(500)">500</a></li>
-					</ul>
-				</div>
-			</div>
-			<!-- PAGINATION -->
-			<div class="pull-right box">
-				<ml-pagination element-per-page="table.itemsPerPage" collection-size="table.totalNumberOfItems" change-page="table.setPage"/>
-			</div>
-			<h1 class="panel-title custom-panel-title">Books</h1>
-		</div>
-		<table class="table table-hover table-responsive">
-			<thead>
-				<th class="col-md-1">Actions</th>
-				<th class="col-md-3">Title</th>
-				<th class="col-md-1"># Books</th>
-				<th class="col-md-4">Authors</th>
-				<th class="col-md-2	">Genre</th>
-			</thead>
-			<tbody>
-				<tr ng-repeat="item in table.items track by $index" ui-sref="booksDetail({id: item.dbID})">
-					<td>
-						<a class="clickable" ng-click="removeBook($event, item.dbID)"><span class="glyphicon glyphicon-play"></span></a>
-						<a class="clickable" ng-click="removeBook($event, item.dbID)"><span class="glyphicon glyphicon-download"></span></a>
-						<a class="clickable" ng-click="removeBook($event, item.dbID)"><span class="glyphicon glyphicon-pencil"></span></a>
-						<a class="clickable" ng-click="removeBook($event, item.dbID)"><span class="glyphicon glyphicon-trash"></span></a>
-					</td>
-					<td>{{item.title}}</td>
-					<td>{{item.books.length}}</td>
-					<td>
-						<span ng-repeat="author in item.authors track by $index">{{author}}{{$last ? '' : ', '}}</span>
-					</td>
-					<td>
-						<span ng-repeat="genre in item.genres  track by $index"><span class="label label-default">{{genre}}</span>{{$last ? '' : ' '}}</span>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-		<div class="panel-footer">
-			<div class="col-lg-offset-11">
-				Results: {{table.totalNumberOfItems}}
-			</div>
-		</div>
-	</div>
+	<ml-collection
+		title="table.title"
+		current-page="table.currentPage"
+		default-size="table.defaultSize"
+		available-sizes="table.availableSizes"
+		number-of-items="table.totalNumberOfItems"
+		display-number-of-items="true"
+		refresh="table.refresh">
+			<table class="table table-hover table-responsive">
+				<thead>
+					<th class="col-md-1">Actions</th>
+					<th class="col-md-3">Title</th>
+					<th class="col-md-1"># Books</th>
+					<th class="col-md-4">Authors</th>
+					<th class="col-md-2	">Genre</th>
+				</thead>
+				<tbody>
+					<tr ng-repeat="item in table.items track by $index" ui-sref="booksDetail({id: item.dbID})">
+						<td>
+							<a class="clickable" ng-click="removeBook($event, item.dbID)"><span class="glyphicon glyphicon-play"></span></a>
+							<a class="clickable" ng-click="removeBook($event, item.dbID)"><span class="glyphicon glyphicon-download"></span></a>
+							<a class="clickable" ng-click="removeBook($event, item.dbID)"><span class="glyphicon glyphicon-pencil"></span></a>
+							<a class="clickable" ng-click="removeBook($event, item.dbID)"><span class="glyphicon glyphicon-trash"></span></a>
+						</td>
+						<td>{{item.title}}</td>
+						<td>{{item.books.length}}</td>
+						<td>
+							<span ng-repeat="author in item.authors track by $index">{{author}}{{$last ? '' : ', '}}</span>
+						</td>
+						<td>
+							<span ng-repeat="genre in item.genres  track by $index"><span class="label label-default">{{genre}}</span>{{$last ? '' : ' '}}</span>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+	</ml-collection>
 </div>
