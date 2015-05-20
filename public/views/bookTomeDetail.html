@@ -1,0 +1,65 @@
+<div class="row">
+	<h2>{{book.title}}</h2>
+</div>
+
+<div class="row">
+	<!-- PHOTO PANEL -->
+	<div class="panel panel-default col-md-4">
+		<div class="panel-body">
+			Photo
+		</div>
+	</div>
+
+	<!-- GENERAL INFO PANEL -->
+	<div class="panel panel-default col-md-8">
+		<div class="panel-body">
+			<div class="row">
+				<strong>ISBN:</strong> {{book.isbn}}
+			</div>
+			<div class="row">
+				<strong>Authors:</strong> <span ng-repeat="author in book.authors track by $index">{{author}}{{$last ? '' : ', '}}</span>
+			</div>
+			<div class="row">
+				<strong>Other titles:</strong> <span ng-repeat="title in book.alternativeTitles track by $index">{{title}}{{$last ? '' : ', '}}</span>
+			</div>
+			<div class="row">
+				<strong>Release Date:</strong> {{book.releaseDate | date: 'yyyy-MM-dd'}}
+			</div>
+			<div class="row">
+				<strong>Tags:</strong> <span ng-repeat="tag in book.tags track by $index" ><span class="label label-default">{{tag}}</span> {{$last ? '' : ' '}}</span>
+			</div>
+			<div class="row">
+				<strong>Genre:</strong> <span ng-repeat="genre in book.genres track by $index"><span class="label label-default">{{genre}}</span>{{$last ? '' : ' '}}</span>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="panel panel-default">
+		<div class="panel-body">
+			{{book.description}}
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h1 class="panel-title"><strong>Download - Full Serie</strong></h1>
+		</div>
+		<div class="panel-body">
+			<accordion>
+				<accordion-group heading="Read Online">
+					read Online
+				</accordion-group>
+				<accordion-group heading="Torrents">
+					Test
+				</accordion-group>
+				<accordion-group heading="Direct Download">
+					Test
+				</accordion-group>
+			</accordion>
+		</div>
+	</div>
+</div>

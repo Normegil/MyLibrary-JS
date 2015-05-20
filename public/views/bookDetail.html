@@ -38,47 +38,51 @@
 </div>
 
 <div class="row">
-	<div class="panel panel-default">
-		<div class="panel-body">
-			{{bookSerie.description}}
-		</div>
-	</div>
+	<ml-collection
+		title="booksList.title"
+		current-page="booksList.currentPage"
+		items-per-page="booksList.itemsPerPage"
+		available-sizes="booksList.availableSizes"
+		collection-size="booksList.totalNumberOfItems"
+		display-number-of-items="false"
+		refresh="booksList.refresh">
+			<table class="table table-hover table-responsive">
+				<thead>
+					<th class="col-md-1">Actions</th>
+					<th class="col-md-3">Title</th>
+					<th class="col-md-3">Authors</th>
+					<th class="col-md-3">Genre</th>
+					<th class="col-md-2">Release Date</th>
+				</thead>
+				<tr ng-repeat="book in booksList.displayedBooks" ui-sref="bookTomeDetail({bookId: bookSerie.dbId, tomeId: book._id})">
+					<td>
+						<a class="clickable" ng-click="removeBook($event, item.dbID)"><span class="glyphicon glyphicon-play"></span></a>
+						<a class="clickable" ng-click="removeBook($event, item.dbID)"><span class="glyphicon glyphicon-download"></span></a>
+						<a class="clickable" ng-click="removeBook($event, item.dbID)"><span class="glyphicon glyphicon-pencil"></span></a>
+						<a class="clickable" ng-click="removeBook($event, item.dbID)"><span class="glyphicon glyphicon-trash"></span></a>
+					</td>
+					<td>
+						{{book.title}}
+					</td>
+					<td>
+						<span ng-repeat="author in book.authors track by $index">{{author}}{{$last ? '' : ', '}}</span>
+					</td>
+					<td>
+						<span ng-repeat="genre in book.genres track by $index"><span class="label label-default">{{genre}}</span>{{$last ? '' : ' '}}</span>
+					</td>
+					<td>
+						{{book.releaseDate | date: 'yyyy-MM-dd'}}
+					</td>
+				</tr>
+			</table>
+	</ml-collection>
 </div>
 
 <div class="row">
 	<div class="panel panel-default">
-		<div class="panel-heading">
-			<h1 class="panel-title"><strong>Books</strong></h1>
+		<div class="panel-body">
+			{{bookSerie.description}}
 		</div>
-		<table class="table table-hover table-responsive">
-			<thead>
-				<th class="col-md-1">Actions</th>
-				<th class="col-md-3">Title</th>
-				<th class="col-md-3">Authors</th>
-				<th class="col-md-3">Genre</th>
-				<th class="col-md-2">Release Date</th>
-			</thead>
-			<tr ng-repeat="book in bookSerie.books">
-				<td>
-					<a class="clickable" ng-click="removeBook($event, item.dbID)"><span class="glyphicon glyphicon-play"></span></a>
-					<a class="clickable" ng-click="removeBook($event, item.dbID)"><span class="glyphicon glyphicon-download"></span></a>
-					<a class="clickable" ng-click="removeBook($event, item.dbID)"><span class="glyphicon glyphicon-pencil"></span></a>
-					<a class="clickable" ng-click="removeBook($event, item.dbID)"><span class="glyphicon glyphicon-trash"></span></a>
-				</td>
-				<td>
-					{{book.title}}
-				</td>
-				<td>
-					<span ng-repeat="author in book.authors track by $index">{{author}}{{$last ? '' : ', '}}</span>
-				</td>
-				<td>
-					<span ng-repeat="genre in book.genres track by $index"><span class="label label-default">{{genre}}</span>{{$last ? '' : ' '}}</span>
-				</td>
-				<td>
-					{{book.releaseDate | date: 'yyyy-MM-dd'}}
-				</td>
-			</tr>
-		</table>
 	</div>
 </div>
 

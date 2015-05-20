@@ -4,7 +4,7 @@
 			ng-model="pageInput.value"
 			ng-blur="pageInput.reset()"
 			on-enter="pageInput.onChange()"
-			placeholder="{{currentPage}} / {{numberOfPages}}"
+			placeholder="{{currentPage + 1}} / {{numberOfPages}}"
 			required />
 	<span class="input-group-btn"><a class="btn btn-default" ng-click="setPage(currentPage + 1)">&rsaquo;</a></span>
 </div>

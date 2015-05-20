@@ -5,15 +5,12 @@
 </div>
 
 <div class="row">
-
-	<alert ng-repeat="alert in alerts.list" type="{{alert.type}}" close="alerts.remove($index)">{{alert.msg}}</alert>
-
 	<ml-collection
 		title="table.title"
 		current-page="table.currentPage"
-		default-size="table.defaultSize"
+		items-per-page="table.itemsPerPage"
 		available-sizes="table.availableSizes"
-		number-of-items="table.totalNumberOfItems"
+		collection-size="table.totalNumberOfItems"
 		display-number-of-items="true"
 		refresh="table.refresh">
 			<table class="table table-hover table-responsive">
@@ -45,3 +42,5 @@
 			</table>
 	</ml-collection>
 </div>
+
+<div ui-view></div>

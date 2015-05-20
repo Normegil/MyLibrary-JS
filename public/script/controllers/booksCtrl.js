@@ -9,7 +9,7 @@ module.controller('BooksController', function($scope, $log, Alerts, BookSerie){
 		items: [],
 		viewType: 'List',
 		currentPage: 0,
-		defaultSize: 10,
+		itemsPerPage: 10,
 		availableSizes:[
 			10,
 			20,
@@ -20,6 +20,7 @@ module.controller('BooksController', function($scope, $log, Alerts, BookSerie){
 		totalNumberOfItems: 0,
 
 		refresh: function refresh(gPage, gLimit){
+			$log.info('Refreshing table with page ' + gPage + ' and size ' + gLimit);
 			var gOffset = gPage * gLimit;
 			var pLinksOnly = gLimit > 50 ?
 				true
@@ -42,7 +43,6 @@ module.controller('BooksController', function($scope, $log, Alerts, BookSerie){
 						$scope.table.items.push(item);
 					}
 				}
-				$log.info('BooksController - Table refreshed')
 			}, function onError(err){
 				$log.error(err);
 				$scope.alerts.add('danger', err.data);

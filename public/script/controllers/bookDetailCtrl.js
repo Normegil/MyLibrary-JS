@@ -2,10 +2,43 @@
 
 var module = angular.module('mylibrary');
 
-module.controller('BookDetailController', function($scope, $log, BookSerie, $stateParams){
-	$scope.bookSerie = BookSerie.get({id:$stateParams.id}, function onSuccess(bookSerie){
-		$scope.bookSerie = bookSerie;
-	});
+module.controller('BookDetailController', function($scope, $log, BookSerie, Alerts, $stateParams, _){
+	$scope.bookSerie = {};
+	$scope.booksList = {
+		title: 'Books',
+		displayedBooks: [],
+		currentPage: 0,
+		itemsPerPage: 7,
+		availableSizes: [
+			7,
+			10,
+			20,
+			50,
+			100,
+			500
+		],
+		totalNumberOfItems: 0,
+
+		refresh: function refresh(page, size){
+			$log.info('Refreshing Book Table with page ' + page + ' and size ' + size);
+			BookSerie.get({id:$stateParams.id}, function onSuccess(bookSerie){
+				$scope.bookSerie = bookSerie;
+				$scope.bookSerie.dbId = getUUID(bookSerie.href);
+				$scope.booksList.displayedBooks = [];
+				$scope.booksList.displayedBooks = getListFrom(
+					bookSerie.books,
+					page * size,
+					size
+				);
+				$scope.booksList.totalNumberOfItems = $scope.bookSerie.books !== undefined ?
+					$scope.bookSerie.books.length : 0;
+			}, function onError(err){
+				Alerts.add('warning', err.data);
+			});
+		}
+	};
+
+	$scope.booksList.refresh($scope.booksList.currentPage, $scope.booksList.itemsPerPage);
 
 	$scope.getAuthors = function getAuthors(bookSerie){
 		if(bookSerie !== undefined && bookSerie.books !== undefined){
@@ -101,4 +134,23 @@ module.controller('BookDetailController', function($scope, $log, BookSerie, $sta
 			}
 		}
 	}
+
+	function getListFrom(books, offset, limit){
+		if(offset < 0 || offset >= books.length){
+			$log.error('Offset incorrect: ' + offset);
+		}else if(limit <= 0){
+			$log.error('Offset incorrect: ' + offset);
+		}else{
+			var sortedBooks = _.sortBy(books, function(book){return new Date(book.releaseDate).getTime()});
+			var booksToReturn = [];
+			for (var i = offset; i < sortedBooks.length && i - offset < limit; i++) {
+				booksToReturn.push(sortedBooks[i]);
+			}
+			return booksToReturn;
+		}
+	}
+	function getUUID(url){
+		var splittedUrl = url.split('/');
+		return splittedUrl[splittedUrl.length -1];
+	};
 });
