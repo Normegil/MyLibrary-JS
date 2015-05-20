@@ -22,6 +22,8 @@
     "jsonwebtoken": "^4.2.1",
     "mongoose": "^3.8.25",
     "node-uuid": "^1.4.3",
+    "react": "^0.13.3",
+    "underscore": "^1.8.3",
     "validator": "^3.39.0"
   }
 }
