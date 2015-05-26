@@ -1,0 +1,8 @@
+#Method;Path
+GET;/bower_components
+GET;/modules
+GET;/directives
+GET;/libraries
+GET;/
+GET;/index.js
+GET;/mylibrary.css

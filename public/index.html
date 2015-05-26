@@ -7,32 +7,9 @@
 		<title>MyLibrary</title>
 		<link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css" />
 		<link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css" />
-		<link rel="stylesheet" type="text/css" href="style/mylibrary.css" />
+		<link rel="stylesheet" type="text/css" href="mylibrary.css" />
 	</head>
 	<body ng-app="mylibrary">
-
-		<script type="text/ng-template" id="alertModal.html">
-			<div class="modal-header">
-				<h3>Alerts & Errors</h3>
-			</div>
-			<div class="modal-body">
-				<alert ng-repeat="alert in alerts.list" type="{{alert.type}}" close="alerts.remove($index)">
-					<p class="pull-right">{{alert.time | date : 'yyyy-MM-dd HH:mm'}}</p>
-					<h3><abbr title="{{alert.code}} - {{alert.developerMessage}}">{{alert.httpStatus}}</abbr></h3>
-					<p>{{alert.message}}</p>
-					<p><small>More Info: <a class="alert-link" target="_blank" href="{{alert.moreInfoUri}}">{{alert.moreInfoUri}}</a></small></p>
-					<p><small><button class="clickable" ng-click="toggleCollapseStatus($index)">Request</button></small></p>
-					<div collapse="alert.collapsed">
-						<div class="well well-lg">{{alert.request.method}} - {{alert.request.url}}</div>
-					</div>
-				</alert>
-			</div>
-			<div class="modal-footer">
-				<button class="btn btn-primary" ng-click="ok()">OK</button>
-				<button class="btn btn-default" ng-click="reset()">Reset</button>
-			</div>
-		</script>
-
 		<nav ng-controller="MenuController" class="navbar navbar-inverse navbar-fixed-top">
 			<div class="container">
 				<div class="navbar-header">
@@ -42,8 +19,8 @@
 				</div>
 				<div id="navbar" class="collapse navbar-collapse">
 					<ul class="nav navbar-nav">
-						<li ui-sref-active="active"><a ui-sref="home">News</a></li>
-						<li ui-sref-active="active"><a ui-sref="books">Books</a></li>
+						<li ui-sref-active="active"><a ui-sref="news">News</a></li>
+						<li ui-sref-active="active"><a ui-sref="bookSeriesList">Books</a></li>
 					</ul>
 					<form class="navbar-form navbar-right" role="search">
 						<input type="text" class="form-control" placeholder="Search" />
@@ -78,23 +55,20 @@
 		<script src="bower_components/underscore/underscore.js"></script>
 
 		<!-- APPLICATION -->
-		<script src="script/index.js"></script>
-		<!-- CUSTOM DIRECTIVES -->
-		<script src="script/directives/ngBreadcrumb/ngBreadcrumb.js"></script>
-		<script src="script/directives/onEnter/onEnter.js"></script>
-		<script src="script/directives/mlPagination/mlPagination.js"></script>
-		<script src="script/directives/mlCollection\mlCollection.js"></script>
-		<!-- CUSTOM FACTORIES -->
-		<script src="script/factories/libraries/underscoreFactory.js"></script>
-		<script src="script/factories/ressources/book.js"></script>
-		<!-- CUSTOM FACTORIES -->
-		<script src="script/services/alerts.js"></script>
-		<!-- CONTROLLERS -->
-		<script src="script/controllers/alertModalCtrl.js"></script>
-		<script src="script/controllers/menuCtrl.js"></script>
-		<script src="script/controllers/homeCtrl.js"></script>
-		<script src="script/controllers/booksCtrl.js"></script>
-		<script src="script/controllers/bookDetailCtrl.js"></script>
-		<script src="script/controllers/BookTomeDetailCtrl.js"></script>
+		<script src="index.js"></script>
+		<!-- LIBRARIES -->
+		<script src="libraries/underscore/underscoreFactory.js"></script>
+		<!-- DIRECTIVES -->
+		<script src="directives/onEnter/onEnter.js"></script>
+		<script src="directives/mlPagination/mlPagination.js"></script>
+		<script src="directives/mlCollection/mlCollection.js"></script>
+		<!-- MODULES -->
+		<script src="modules/alert/alertService.js"></script>
+		<script src="modules/alert/alertModalCtrl.js"></script>
+		<script src="modules/home/homeCtrl.js"></script>
+		<script src="modules/book/bookRessource.js"></script>
+		<script src="modules/book/bookSeriesList/bookSeriesListCtrl.js"></script>
+		<script src="modules/book/bookSerieDetails/bookSerieDetailsCtrl.js"></script>
+		<script src="modules/book/bookDetail/bookDetailCtrl.js"></script>
 	</body>
 </html>
