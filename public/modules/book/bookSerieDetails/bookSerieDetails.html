@@ -45,6 +45,7 @@
 		available-sizes="booksList.availableSizes"
 		collection-size="booksList.totalNumberOfItems"
 		display-number-of-items="false"
+		add-element="addBook"
 		refresh="booksList.refresh">
 			<table class="table table-hover table-responsive">
 				<thead>
@@ -56,10 +57,10 @@
 				</thead>
 				<tr ng-repeat="book in booksList.displayedBooks" ui-sref="bookDetail({serieId: bookSerie.dbId, bookId: book._id})">
 					<td>
-						<a class="clickable" ng-click="removeBook($event, item.dbID)"><span class="glyphicon glyphicon-play"></span></a>
-						<a class="clickable" ng-click="removeBook($event, item.dbID)"><span class="glyphicon glyphicon-download"></span></a>
-						<a class="clickable" ng-click="removeBook($event, item.dbID)"><span class="glyphicon glyphicon-pencil"></span></a>
-						<a class="clickable" ng-click="removeBook($event, item.dbID)"><span class="glyphicon glyphicon-trash"></span></a>
+						<a class="clickable" ng-click=""><span class="glyphicon glyphicon-play"></span></a>
+						<a class="clickable" ng-click=""><span class="glyphicon glyphicon-download"></span></a>
+						<a class="clickable" ng-click="editBook($event, book._id)"><span class="glyphicon glyphicon-pencil"></span></a>
+						<a class="clickable" ng-click="removeBook($event, book._id)"><span class="glyphicon glyphicon-trash"></span></a>
 					</td>
 					<td>
 						{{book.title}}

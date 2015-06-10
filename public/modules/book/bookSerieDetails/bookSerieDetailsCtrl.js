@@ -2,7 +2,7 @@
 
 var module = angular.module('mylibrary');
 
-module.controller('BookSerieDetailsController', function($scope, $log, BookSerie, Alerts, $stateParams, _){
+module.controller('BookSerieDetailsController', function($scope, $log, BookSerie, Alerts, $stateParams, _, $modal){
 	$scope.bookSerie = {};
 	$scope.booksList = {
 		title: 'Books',
@@ -103,6 +103,53 @@ module.controller('BookSerieDetailsController', function($scope, $log, BookSerie
 			}
 			return date;
 		}
+	};
+
+	$scope.addBook = function addBook(){
+		var modal = $modal.open({
+			animation:true,
+			controller: 'AddBookModalController',
+			size: 'lg',
+			templateUrl: 'modules/book/addBookModal/addBookModal.html',
+			resolve:{
+				serieId: function getSerieId(){
+					return $scope.bookSerie.dbId;
+				}
+			}
+		});
+		modal.result.then(function onSuccess(){
+			$scope.booksList.refresh($scope.booksList.currentPage, $scope.booksList.itemsPerPage);
+		});
+	}
+	$scope.editBook = function editBook(e, bookId){
+		e.stopPropagation();
+		var modal = $modal.open({
+			animation:true,
+			controller: 'AddBookModalController',
+			size: 'lg',
+			templateUrl: 'modules/book/addBookModal/addBookModal.html',
+			resolve:{
+				serieId: function getSerieId(){
+					return $scope.bookSerie.dbId;
+				},
+				bookId: function getBookId(){
+					return bookId;
+				}
+			}
+		});
+		modal.result.then(function onSuccess(){
+			$scope.booksList.refresh($scope.booksList.currentPage, $scope.booksList.itemsPerPage);
+		});
+	}
+	$scope.removeBook = function removeBook(e, gID){
+		e.stopPropagation();
+		$scope.bookSerie.books = _.filter($scope.bookSerie.books, function(book) { return book._id !== gID; });
+		$scope.bookSerie.$update({id:$scope.bookSerie.dbId}, function onSuccess(bookSerie){
+			$scope.booksList.refresh($scope.booksList.currentPage, $scope.booksList.itemsPerPage);
+		}, function onError(err){
+			$log.error(err);
+			$scope.alerts.add('warning', err.data);
+		});
 	};
 
 	function getEarliestDate(date1, date2){
