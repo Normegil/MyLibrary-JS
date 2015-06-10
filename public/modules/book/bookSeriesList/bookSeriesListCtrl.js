@@ -51,6 +51,46 @@ module.controller('BookSeriesListController', function($scope, $log, Alerts, Boo
 	};
 	$scope.table.refresh($scope.table.currentPage, $scope.table.itemsPerPage);
 
+	$scope.addBookSerie = function addBookSerie(){
+		var modal = $modal.open({
+			animation:true,
+			controller: 'EditBookSerieModalController',
+			size: 'lg',
+			templateUrl: 'modules/book/editBookSerieModal/editBookSerieModal.html'
+		});
+		modal.result.then(function onSuccess(bookSerie){
+			bookSerie.$save(function onSuccess(){
+				$log.info('Book saved');
+				$scope.booksList.refresh($scope.booksList.currentPage, $scope.booksList.itemsPerPage);
+			}, function onError(err){
+				Alerts.add('warning', err.data);
+			});
+		});
+	};
+
+	$scope.editBookSerie = function editBookSerie(e, gID){
+		e.stopPropagation();
+		var modal = $modal.open({
+			animation:true,
+			controller: 'EditBookSerieModalController',
+			size: 'lg',
+			templateUrl: 'modules/book/editBookSerieModal/editBookSerieModal.html',
+			resolve:{
+				serieId: function getSerieId(){
+					return gID;
+				}
+			}
+		});
+		modal.result.then(function onSuccess(bookSerie){
+			bookSerie.$update({id:gID}, function onSuccess(){
+				$log.info('Book saved');
+				$scope.booksList.refresh($scope.booksList.currentPage, $scope.booksList.itemsPerPage);
+			}, function onError(err){
+				Alerts.add('warning', err.data);
+			});
+		});
+	};
+
 	function loadBook(uuid, i){
 		BookSerie.get({id:uuid}, function onSuccess(bookSerie){
 			bookSerie.dbID = uuid;

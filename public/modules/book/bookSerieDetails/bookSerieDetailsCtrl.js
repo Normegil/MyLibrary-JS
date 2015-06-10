@@ -117,8 +117,13 @@ module.controller('BookSerieDetailsController', function($scope, $log, BookSerie
 				}
 			}
 		});
-		modal.result.then(function onSuccess(){
-			$scope.booksList.refresh($scope.booksList.currentPage, $scope.booksList.itemsPerPage);
+		modal.result.then(function onSuccess(bookSerie){
+			bookSerie.$update({id:$stateParams.id}, function onSuccess(){
+				$log.info('Book saved');
+				$scope.booksList.refresh($scope.booksList.currentPage, $scope.booksList.itemsPerPage);
+			}, function onError(err){
+				Alerts.add('warning', err.data);
+			});
 		});
 	}
 	$scope.editBook = function editBook(e, bookId){
@@ -137,8 +142,13 @@ module.controller('BookSerieDetailsController', function($scope, $log, BookSerie
 				}
 			}
 		});
-		modal.result.then(function onSuccess(){
-			$scope.booksList.refresh($scope.booksList.currentPage, $scope.booksList.itemsPerPage);
+		modal.result.then(function onSuccess(bookSerie){
+			bookSerie.$update({id:$stateParams.id}, function onSuccess(){
+				$log.info('Book saved');
+				$scope.booksList.refresh($scope.booksList.currentPage, $scope.booksList.itemsPerPage);
+			}, function onError(err){
+				Alerts.add('warning', err.data);
+			});
 		});
 	}
 	$scope.removeBook = function removeBook(e, gID){

@@ -30,13 +30,7 @@ var module = angular
 			}else{
 				$scope.bookSerie.books.push($scope.book);
 			}
-			$scope.bookSerie.$update({id:serieId}, function onSuccess(){
-				$log.info('Book saved');
-				$modalInstance.close();
-			}, function onError(err){
-				Alerts.add('warning', err.data);
-				$modalInstance.close();
-			});
+			$modalInstance.close($scope.bookSerie);
 		}
 
 		$scope.reset = function(){

@@ -12,6 +12,7 @@
 		available-sizes="table.availableSizes"
 		collection-size="table.totalNumberOfItems"
 		display-number-of-items="true"
+		add-element="addBookSerie"
 		refresh="table.refresh">
 			<table class="table table-hover table-responsive">
 				<thead>
@@ -26,7 +27,7 @@
 						<td>
 							<a class="clickable" ng-click="removeBook($event, item.dbID)"><span class="glyphicon glyphicon-play"></span></a>
 							<a class="clickable" ng-click="removeBook($event, item.dbID)"><span class="glyphicon glyphicon-download"></span></a>
-							<a class="clickable" ng-click="removeBook($event, item.dbID)"><span class="glyphicon glyphicon-pencil"></span></a>
+							<a class="clickable" ng-click="editBookSerie($event, item.dbID)"><span class="glyphicon glyphicon-pencil"></span></a>
 							<a class="clickable" ng-click="removeBook($event, item.dbID)"><span class="glyphicon glyphicon-trash"></span></a>
 						</td>
 						<td>{{item.title}}</td>

@@ -1,0 +1,49 @@
+<div class="modal-header">
+	<h3>{{title}}</h3>
+</div>
+<div class="modal-body">
+	<tabset justified="true">
+		<tab heading="Serie">
+			<ml-book-serie-form bookSerie="bookSerie"></ml-book-serie-form>
+		</tab>
+		<tab heading="Books">
+			<ml-collection
+				title="booksList.title"
+				current-page="booksList.currentPage"
+				items-per-page="booksList.itemsPerPage"
+				available-sizes="booksList.availableSizes"
+				collection-size="booksList.totalNumberOfItems"
+				display-number-of-items="false"
+				add-element="addBook"
+				refresh="booksList.refresh">
+					<table class="table table-hover table-responsive">
+						<thead>
+							<th class="col-md-1">Actions</th>
+							<th class="col-md-3">Title</th>
+							<th class="col-md-3">Authors</th>
+							<th class="col-md-2">Release Date</th>
+						</thead>
+						<tr ng-repeat="book in booksList.displayedBooks" ui-sref="bookDetail({serieId: bookSerie.dbId, bookId: book._id})">
+							<td>
+								<a class="clickable" ng-click="editBook($event, book._id)"><span class="glyphicon glyphicon-pencil"></span></a>
+								<a class="clickable" ng-click="removeBook($event, book._id)"><span class="glyphicon glyphicon-trash"></span></a>
+							</td>
+							<td>
+								{{book.title}}
+							</td>
+							<td>
+								<span ng-repeat="author in book.authors track by $index">{{author}}{{$last ? '' : ', '}}</span>
+							</td>
+							<td>
+								{{book.releaseDate | date: 'yyyy-MM-dd'}}
+							</td>
+						</tr>
+					</table>
+			</ml-collection>
+		</tab>
+	</tabset>
+</div>
+<div class="modal-footer">
+	<button class="btn btn-primary" ng-click="ok()">Save</button>
+	<button class="btn btn-default" ng-click="reset()">Reset</button>
+</div>
