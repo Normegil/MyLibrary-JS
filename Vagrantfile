@@ -17,10 +17,16 @@ Vagrant.configure(2) do |config|
 			args: "-t mylibrary/base"
 		d.build_image "/app/docker/data",
 			args: "-t mylibrary/data"
+		d.build_image "/app/docker/app/MongoDB",
+				args: "-t mylibrary/mongo"
+
 
 		d.run "data",
 			image: "mylibrary/data",
 			args: "-v /app:/app"
+		d.run "mongo",
+			image: "mylibrary/mongo",
+			args: "-p 27017:27017 --volumes-from data"
 		
 	end
 end
