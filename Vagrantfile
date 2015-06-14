@@ -20,10 +20,11 @@ Vagrant.configure(2) do |config|
 		d.build_image "/app/docker/app/MongoDB",
 				args: "-t mylibrary/mongo"
 		d.build_image "/app/docker/servers/NodeJS",
-			args: "-t mylibrary/node"
+			args: "-t mylibrary-server/node"
 		d.build_image "/app/docker/app/Node-Server",
 			args: "-t mylibrary/node-server"
-
+		d.build_image "/app/docker/test/data/Mongo-Express",
+			args: "-t mylibrary/mongo-express"
 
 		d.run "data",
 			image: "mylibrary/data",
@@ -34,6 +35,8 @@ Vagrant.configure(2) do |config|
 		d.run "node-server",
 			image: "mylibrary/node-server",
 			args: "-p 8080:8080 --link mongo:mongo --volumes-from data"
-		
+		d.run "mongo-express",
+			image: "mylibrary/mongo-express",
+			args: "-p 8081:8081 --link mongo:mongo"
 	end
 end
