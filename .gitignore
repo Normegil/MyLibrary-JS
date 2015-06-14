@@ -1,6 +1,9 @@
 #Logging form applications and DB files
 logs/
 
+#MongoDB
+./data/
+
 #TEMP Files
 *~
 

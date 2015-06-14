@@ -15,6 +15,12 @@ Vagrant.configure(2) do |config|
 	config.vm.provision "docker" do |d|
 		d.build_image "/app/docker/base",
 			args: "-t mylibrary/base"
+		d.build_image "/app/docker/data",
+			args: "-t mylibrary/data"
 
+		d.run "data",
+			image: "mylibrary/data",
+			args: "-v /app:/app"
+		
 	end
 end
