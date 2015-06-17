@@ -8,6 +8,7 @@ docker run \
 	-e "GENERATOR_MODERATOR_SIZE=10" \
 	-e "GENERATOR_USER_SIZE=100" \
 	--link mongo:mongo \
+	--link log-fluentd:fluentd \
 	--volumes-from data \
 	--name test-data-generator-userAndGroup \
 	mylibrary-test/data-generator

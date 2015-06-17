@@ -9,6 +9,7 @@ docker run \
 	-e "GENERATOR_USER_SIZE=100" \
 	-e "GENERATOR_MANGA_NUMBER=1000" \
 	--link mongo:mongo \
+	--link log-fluentd:fluentd \
 	--volumes-from data \
 	--name test-data-generator-full \
 	mylibrary-test/data-generator
