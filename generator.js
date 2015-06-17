@@ -11,7 +11,7 @@ var routing = requireModule('routing');
 var generator = requireModule('generator');
 
 mongoose.connect(config.databaseURL);
-var generatorConfig = config.generator;
+var generatorConfig = config.generation;
 
 var group = generator.group;
 var bookSerie = generator.books;
