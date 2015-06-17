@@ -1,3 +1,10 @@
+$start = <<SCRIPT
+docker start mongo
+docker start log-fluentd
+docker start node-server
+docker start mongo-express
+SCRIPT
+
 Vagrant.configure(2) do |config|
 	config.vm.provider "virtualbox"
 	config.vm.box = "ubuntu/trusty64"
@@ -21,6 +28,8 @@ Vagrant.configure(2) do |config|
 				args: "-t mylibrary/mongo"
 		d.build_image "/app/docker/servers/NodeJS",
 			args: "-t mylibrary-server/node"
+		d.build_image "/app/docker/log/Fluentd",
+				args: "-t mylibrary-log/fluentd"
 		d.build_image "/app/docker/app/Node-Server",
 			args: "-t mylibrary/node-server"
 		d.build_image "/app/docker/test/data/Mongo-Express",
@@ -32,11 +41,16 @@ Vagrant.configure(2) do |config|
 		d.run "mongo",
 			image: "mylibrary/mongo",
 			args: "-p 27017:27017 --volumes-from data"
+		d.run "log-fluentd",
+				image: "mylibrary-log/fluentd",
+				args: "--volumes-from data"
 		d.run "node-server",
 			image: "mylibrary/node-server",
-			args: "-p 8080:8080 --link mongo:mongo --volumes-from data"
+			args: "-p 8080:8080 --link mongo:mongo --link log-fluentd:fluentd --volumes-from data"
 		d.run "mongo-express",
 			image: "mylibrary/mongo-express",
 			args: "-p 8081:8081 --link mongo:mongo"
 	end
+
+	config.vm.provision "shell", run: "always", inline: $start
 end

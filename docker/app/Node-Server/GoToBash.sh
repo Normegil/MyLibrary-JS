@@ -1,9 +1,10 @@
 #!/bin/bash
 docker run \
-	-d \
+	-it \
+	--rm \
 	-p 8080:8080\
 	--link log-fluentd:fluentd \
 	--link mongo:mongo \
 	--volumes-from data \
-	--name node-server \
-	mylibrary/node-server
+	mylibrary/node-server \
+	bash
