@@ -12,6 +12,8 @@ Vagrant.configure(2) do |config|
 	config.vm.network "forwarded_port", guest: 5601, host: 15601
 	config.vm.network "forwarded_port", guest: 8080, host: 18080
 	config.vm.network "forwarded_port", guest: 8081, host: 18081
+	config.vm.network "forwarded_port", guest: 8082, host: 18082
+	config.vm.network "forwarded_port", guest: 27017, host: 17017
 
 	config.vm.network "private_network", ip: "192.168.210.2"
 	config.vm.synced_folder ".", "/app", type: "nfs"
