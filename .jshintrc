@@ -1,19 +1,29 @@
 {
-	// Style
-	"bitwise"			:	true,			//Prohibit bitwise operators (&, |, ...)
-	"trailing"		:	true, 		//Prohibit trailing whitespaces
-	"latedef"			:	true,			//Prohibit variable use before definition
-	"noarg"				:	true,			//Prohibit use of 'argument.caller' and 'argument.callee'
-	"noempty"			:	true,			//Prohibit empty blocks
-	"undef"				:	true,			//Require declaration of non global variables before use
-	"newcap"			:	true,			//Require capitals in constuctor functions
-	"curly"				:	true,			//Require '{}' for new blocks
-	"eqeqeq"			: true,			//Require triple equals for equality
+	"node"						:	true,
 
-	"strict"			:	true,			//"Use strict" everywhere
-	"es5"					:	true,			//Allow EcmaScript 5 syntax
+	"bitwise"					:	true,
+	"curly"						:	true,
+	"eqeqeq"					:	true,
+	"es5"							:	true,
+	"freeze"					:	true,
+	"funcscope"				:	false,
+	"futurehostile"		:	false,
+	"latedef"					: "nofunc",
 
-	// Environments
-	"node"				: true,			//Enable Node Mode
-	"browse"			: false,		//Enable Browser globals variables
+	"maxdepth"				:	2,
+	"maxparams"				:	3,
+	"maxstatements"		:	15,
+	"maxcomplexity"		:	5,
+
+	"noarg"						:	true,
+	"nocomma"					:	true,
+	"nonew"						:	true,
+	"singlegroups"		:	true,
+	"strict"					:	true,
+	"undef"						:	true,
+	"unused"					:	true,
+
+	"globals" :	{
+		"requireModule"	:	false
+	}
 }
