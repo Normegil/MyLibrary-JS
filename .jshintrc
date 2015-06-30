@@ -18,7 +18,7 @@
 	"noarg"						:	true,
 	"nocomma"					:	true,
 	"nonew"						:	true,
-	"singlegroups"		:	true,
+	"singleGroups"		:	true,
 	"strict"					:	true,
 	"undef"						:	true,
 	"unused"					:	true,
