@@ -1,15 +1,16 @@
 'use strict';
 
 angular
-	.module('mylibrary')
-	.directive('onEnter', function(){
-		return function(scope, element, attrs) {
-			element.bind('keypress', function(event){
-				if(event.which === 13){
-					scope.$apply(function(){
-						scope.$eval(attrs.onEnter, {'event' : event})
-					});
-				}
-			});
-		};
-	});
+  .module('mylibrary')
+  .directive('onEnter', function onEnterController() {
+    return function bindToElement(scope, element, attrs) {
+      element.bind('keypress', function onKeyPress(event) {
+        var enterKeyPressNumber = 13;
+        if (enterKeyPressNumber === event.which) {
+          scope.$apply(function triggerAction() {
+            scope.$eval(attrs.onEnter, {event: event});
+          });
+        }
+      });
+    };
+  });
