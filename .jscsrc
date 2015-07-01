@@ -19,6 +19,7 @@
   "disallowSpacesInForStatement"                  :  true,
   "disallowSpacesInsideArrayBrackets"             :  true,
   "disallowSpacesInsideObjectBrackets"            :  true,
+  "maximumLineLength"                             :  100,
   "maximumNumberOfLines"                          :  200,
   "requireBlocksOnNewline"                        :  true,
   "requireCommaBeforeLineBreak"                   :  true,

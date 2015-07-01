@@ -1,5 +1,6 @@
+'use strict';
 angular
-	.module('mylibrary')
-	.factory('moment', function(){
-		return window.moment;
-	});
+  .module('mylibrary')
+  .factory('moment', function momentFactory() {
+    return window.moment;
+  });

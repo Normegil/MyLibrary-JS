@@ -26,5 +26,5 @@
 		"requireModule"	:	false
 	},
 
-	"predef"          : ["angular"]
+	"predef"          : ["angular", "window"]
 }

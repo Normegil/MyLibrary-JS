@@ -1,5 +1,6 @@
+'use strict';
 angular
-	.module('mylibrary')
-	.factory('_', function(){
-		return window._;
-	});
+  .module('mylibrary')
+  .factory('_', function underscoreFactory() {
+    return window._;
+  });

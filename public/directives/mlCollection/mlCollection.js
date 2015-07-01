@@ -24,7 +24,8 @@ angular
       controller: function directiveController($scope, $log, _) {
         $scope.smallestAvalaibleSize = _.min($scope.availableSizes);
         $scope.changePage = function changePage(page, forceRefresh) {
-          $log.debug('Attempt to change currentPage to ' + page + '(CurrentPage: ' + $scope.currentPage + ')');
+          $log.debug('Attempt to change currentPage to ' + page +
+            '(CurrentPage: ' + $scope.currentPage + ')');
           if (0 > page) {
             page = 0;
           } else if (page >= getTotalNumberOfPages()) {

@@ -1,46 +1,53 @@
 'use strict';
 
-var module = angular
-	.module('mylibrary')
-	.controller('AddBookModalController', function($scope, $log, $modalInstance, serieId, bookId, Alerts, BookSerie){
-		var originalBook = {};
-		$scope.book = {};
-		$scope.bookSerie;
-		$scope.title = 'Add a book';
-		if(serieId !== undefined && serieId !== null){
-			$scope.bookSerie = BookSerie.get({id:serieId}, function onLoad(bookSerie){
-				$scope.bookSerie = bookSerie;
-				if(bookId !== undefined && bookId !== null){
-					var book = _.find($scope.bookSerie.books, function find(book){ return bookId === book._id; });
-					$scope.book = angular.copy(book);
-					originalBook = angular.copy(book);
-					$scope.title = bookSerie.title + ' - Edit ' + $scope.book.title;
-				}else{
-					$scope.title = bookSerie.title + ' - Add a Book';
-				}
-			}, function onError(err){
-				Alerts.add('warning', err.data);
-			});
-		}
+angular
+  .module('mylibrary')
+  .controller('AddBookModalController',
+      ['$scope', '$log', '$modalInstance', 'serieId', 'bookId', 'Alerts', 'BookSerie', '_',
+      // jscs:disable maximumLineLength
+      function addBookModalController($scope, $log, $modalInstance, serieId, bookId, Alerts, BookSerie, _) {
+        // jscs:enable maximumLineLength
+        var originalBook = {};
+        $scope.book = {};
+        $scope.title = 'Add a book';
+        if (undefined !== serieId && null !== serieId) {
+          $scope.bookSerie = BookSerie.get({id: serieId}, function onLoad(bookSerie) {
+            $scope.bookSerie = bookSerie;
+            if (undefined !== bookId && null !== bookId) {
+              var book = _.find($scope.bookSerie.books, function find(book) {
+                return bookId === book._id;
+              });
+              $scope.book = angular.copy(book);
+              originalBook = angular.copy(book);
+              $scope.title = bookSerie.title + ' - Edit ' + $scope.book.title;
+            } else {
+              $scope.title = bookSerie.title + ' - Add a Book';
+            }
+          }, function onError(err) {
+            Alerts.add('warning', err.data);
+          });
+        }
 
-		$scope.ok = function(){
-			if(bookId !== undefined && bookId !== null){
-				var book = _.find($scope.bookSerie.books, function find(book){ return bookId === book._id; });
-				angular.copy($scope.book, book);
-			}else{
-				$scope.bookSerie.books.push($scope.book);
-			}
-			$scope.bookSerie.$update({id:serieId}, function onSuccess(){
-				$log.info('Book saved');
-				$modalInstance.close();
-			}, function onError(err){
-				Alerts.add('warning', err.data);
-				$modalInstance.close();
-			});
-		}
+        $scope.ok = function ok() {
+          if (undefined !== bookId && null !== bookId) {
+            var book = _.find($scope.bookSerie.books, function find(book) {
+              return bookId === book._id;
+            });
+            angular.copy($scope.book, book);
+          } else {
+            $scope.bookSerie.books.push($scope.book);
+          }
+          $scope.bookSerie.$update({id: serieId}, function onSuccess() {
+            $log.info('Book saved');
+            $modalInstance.close();
+          }, function onError(err) {
+            Alerts.add('warning', err.data);
+            $modalInstance.close();
+          });
+        };
 
-		$scope.reset = function(){
-			$scope.book = angular.copy(originalBook);
-		}
-	})
-	.value('bookId', null);
+        $scope.reset = function reset() {
+          $scope.book = angular.copy(originalBook);
+        };
+      },
+    ]).value('bookId', null);

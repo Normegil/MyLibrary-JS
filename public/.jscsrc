@@ -1,5 +1,5 @@
 {
-  "preset"                                        :  "google",
+  "preset"                                        :  "node-style-guide",
 
   "disallowQuotedKeysInObjects"                   :  "allButReserved",
 	"disallowMultipleVarDecl"                       :  "strict",
@@ -19,8 +19,8 @@
   "disallowSpacesInForStatement"                  :  true,
   "disallowSpacesInsideArrayBrackets"             :  true,
   "disallowSpacesInsideObjectBrackets"            :  true,
-  "maximumLineLength"                             :  160,
-  "maximumNumberOfLines"                          :  200,
+  "maximumLineLength"                             :  100,
+  "maximumNumberOfLines"                          :  400,
   "requireBlocksOnNewline"                        :  true,
   "requireCommaBeforeLineBreak"                   :  true,
   "requireDotNotation"                            :  true,
