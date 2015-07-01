@@ -7,7 +7,6 @@
 
   "requireSpaceBeforeKeywords"                    :  ["else", "catch"],
   "disallowAnonymousFunctions"                    :  true,
-  "disallowDanglingUnderscores"                   :  true,
   "disallowEmptyBlocks"                           :  true,
   "disallowMultipleLineBreaks"                    :  true,
   "disallowMultipleLineStrings"                   :  true,

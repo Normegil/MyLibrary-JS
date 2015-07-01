@@ -1,7 +1,5 @@
 'use strict';
-// jscs:disable disallowDanglingUnderscores
 global.__root = __dirname;
-// jscs:enable disallowDanglingUnderscores
 global.requireModule = function requireModule(name) {
   return require(__dirname + '/lib/' + name);
 };
