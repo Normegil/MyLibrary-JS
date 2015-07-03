@@ -1,6 +1,8 @@
 'use strict';
 
-var module = angular.module('mylibrary');
-module.controller('HomeController', function($scope){
-	$scope.test = 1;
-});
+angular
+  .module('mylibrary')
+  .controller('HomeController', function homeController($scope) {
+    $scope.test = 1;
+  }
+);
